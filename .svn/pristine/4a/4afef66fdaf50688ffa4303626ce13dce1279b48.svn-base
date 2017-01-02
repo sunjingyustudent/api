@@ -1,0 +1,133 @@
+<?php
+/**
+ * 帐号公开接口API
+ * 1.登录、
+ * 2.注册
+ * 3.忘记密码
+ * 不需要验证用户身份token
+ */
+namespace Api\Controller;
+
+use Common\Controller\ApiController;
+
+
+class AccountController extends ApiController{
+    public function _initialize(){
+        //模块初始化，重写父类方法，避免该模块进入token验证
+    }
+
+
+
+    //2016-08-15 用户登录 sjy
+    //Api/Account/login/username/12/userpwd/12
+    public function login()
+    {  /* $password = md5($pwd);
+        $where['userpwd'] = '###'.$password;*/
+
+        $user = I('get.username');
+        $pwd = I('get.userpwd');
+        if(!empty($user)&&!empty($pwd))
+        {
+            $where['userpwd'] = $pwd;
+            $where['username'] = $user;
+            $where['isdelete'] = 0;
+            $owner = M('userinfos');
+            $resn=$owner->where($where)
+                ->field("userid")
+                ->find();
+            $userid = json_decode($resn["userid"]);
+            //调用声称toke的方法
+            //$aa = new ApiController();
+            //$token=$aa->usertoken($resn["userid"]);
+            $nick = '用户'.randCodeM(4);
+            $time=uniqid();
+            $token=md5($nick.$time.$userid);
+            //var_dump($token);
+            //保存到redis里
+            $sitename=C('SITENAME');
+            \Predis\Autoloader::register();
+            $redis = new \Predis\Client();
+            $redis ->set( $sitename.'-token-'.$token ,$userid);//添加到redis缓存中
+            $result= $redis ->get($userid);
+            var_dump($result);
+            if(!empty($result)){
+                $this->myApiPrint('success',200,$result);
+            }else{
+                $this->myApiPrint('don\'t find ',404);
+            }
+        }
+    }
+
+    //2016-08-16 用户注册 sjy
+    //m=Api&c=Account&a=register
+     public function register(){
+
+         $rm=I("get.");
+
+         $where["usercode"]=getRandcode();//获取用户编码
+         $where["username"]=$rm["username"];//获取用户名
+         $where["email"]=$rm["email"];//获取用户email
+         $where["userpwd"]=$rm["userpwd"];//获取用户密码
+         $where["nickname"]=$rm["nickname"];//获取用户昵称
+         $where["fromsource"]=$rm["fromsource"];//获取用户来源
+         $where["sourcecode"]=$rm["sourcecode"];//获取用户来源编码
+         $where["headimage"]=$rm["headimage"];//获取用户头像
+         $where["phone"]=$rm["phone"];//获取用户手机号
+         $where["qq"]=$rm["qq"];//获取用户qq
+         $where["weixin"]=$rm["weixin"];//获取用户微信
+         $where["sina"]=$rm["sina"];
+
+         $owner = M('userinfos');
+         $resn = $owner
+             ->data($where)
+             ->add();
+
+         var_dump($resn);
+
+         if (!$resn) {
+             $this->myApiPrint('注册失败!',300);
+         }
+         else{
+             $msg = 'success';
+             $this->myApiPrint($msg,200,$resn);
+         }
+     }
+
+    /*
+     * 2016-08-16 忘记密码 根据手机号和新密码去修改用户密码 sjy
+        m=Api&c=Account&a=callpwd
+    */
+    public function callpwd(){
+        
+        $atoken = I('post.atoken');//获取用户的token
+        $phone = I('post.phone');
+        $userpwd = I('post.userpwd');
+        $isdelete = 0;
+        $owner = M('userinfos');
+        $exit = $owner
+            ->join("left join wht_accesstoken as u on u.userid = wht_userinfos.userid")
+            ->where("phone='%d'and wht_userinfos.isdelete='%f' and atoken='%s' ",$phone,$isdelete,$atoken)->find();
+
+        if($exit) {
+            $where["userpwd"] =$userpwd;
+        }else{
+            $this->myApiPrint('phone dont exit!！',300);
+        }
+        $resn = $owner
+            ->where("phone=$phone")
+            ->save($where);
+        if (!$resn) {
+            $this->myApiPrint('error',300);
+        }
+        else{
+            $msg = 'success';
+            $this->myApiPrint($msg,200,$resn);
+        }
+    }
+
+
+
+
+
+
+}

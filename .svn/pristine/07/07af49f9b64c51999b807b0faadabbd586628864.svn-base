@@ -1,0 +1,150 @@
+<?php
+/**
+ * 帐号公开接口API
+ * 1.登录、
+ * 2.注册
+ * 3.忘记密码
+ * 不需要验证用户身份token
+ */
+namespace Api\Controller;
+
+use Common\Controller\ApiController;
+
+
+class AccountController extends ApiController{
+    public function _initialize(){
+        //模块初始化，重写父类方法，避免该模块进入token验证
+    }
+
+    /*
+     * 2016-08-15 用户登录 sjy
+     * Api/Account/login/username/122/userpwd/1
+     * */
+    public function login()
+    {
+       /* echo "dsfc";
+        exit();*/
+        $user = I('get.username');
+        $pwd = I('get.userpwd');
+
+        if(!empty($user)&&!empty($pwd))
+        {
+            $where['userpwd'] = $pwd;
+            $where['username'] = $user;
+            $where['isdelete'] = 0;
+       /*     $isdelete=0;*/
+            $owner = M('userinfos');
+            $resn=$owner->where($where)
+                ->field("userid")
+                ->find();
+
+            if(!empty($resn)){
+                $userid = json_decode($resn["userid"]);
+                $nick = '用户'.randCodeM(4);
+                $time=uniqid();
+                $token=md5($nick.$time.$userid);
+                //保存到redis里
+                $sitename=C('SITENAME');
+                \Predis\Autoloader::register();
+                $redis = new \Predis\Client();
+                $redis ->set( $sitename.'-token-'.$token ,array('uid'=>$userid,'type'=>2));//添加到redis缓存中 本站用户是2
+                $redis->expire($sitename.'-token-'.$token,604800); //设置过期时间 86400  1440分钟  168小时7条
+                $accesstoken = $sitename.'-token-'.$token;
+                //access
+                //获取过期时间
+                $expiresdate = $redis->ttl($sitename.'-token-'.$token);
+                $result = array(
+                    'token' => $accesstoken,
+                    'type' => 1,
+                    'expires' => $expiresdate
+                );
+                if(!empty($accesstoken)){
+                    $this->myApiPrint('success',200,$result);
+                }else{
+                    $this->myApiPrint('don\'t find ',404);
+                }
+            }else{
+                $this->myApiPrint('error',-0201);
+            }
+        }
+    }
+
+    /*2016-08-16 用户注册 sjy
+     * Api/Account/register/username/{username}/email/{email}/userpwd/{userpwd}/nickname/{nickname}/fromsource/{fromsource}/sourcecode/{sourcecode}/headimage/{headimage}/phone/{phone}/qq/{qq}/weixin/{weixin}/sina/{sina}
+     * */
+     public function register(){
+         $rm=I("post.");
+         $where["usercode"]=getRandcode();//获取用户编码
+         $where["username"]=$rm["username"];//获取用户名
+         $where["email"]=$rm["email"];//获取用户email
+         $where["userpwd"]=$rm["userpwd"];//获取用户密码
+         $where["nickname"]=$rm["nickname"];//获取用户昵称
+         $where["fromsource"]=$rm["fromsource"];//获取用户来源
+         $where["sourcecode"]=$rm["sourcecode"];//获取用户来源编码
+         $where["headimage"]=$rm["headimage"];//获取用户头像
+         $where["phone"]=$rm["phone"];//获取用户手机号
+         $where["qq"]=$rm["qq"];//获取用户qq
+         $where["weixin"]=$rm["weixin"];//获取用户微信
+         $where["sina"]=$rm["sina"];
+         $owner = M('userinfos');
+         $resn = $owner
+             ->data($where)
+             ->add();
+//         var_dump($resn);
+         if (!$resn) {
+             $this->myApiPrint('register error',300);
+         }
+         else{
+             $this->myApiPrint("success",200,$resn);
+         }
+     }
+
+    /*
+     * 2016-08-16 忘记密码 根据手机号和新密码去修改用户密码 sjy
+     * Api/Account/callpwd/accesstoken/{accesstoken}/phone/{phone}/userpwd/{userpwd}后面跟的值
+    */
+    public function callpwd(){
+        $atoken = I('post.accesstoken');//获取用户的token
+        $phone = I('post.phone');
+        $userpwd = I('get.userpwd');
+        //判断token是否存在是否过期 存在就修改密码
+        $owner = M('userinfos');
+        if($this->checktoken($atoken)){
+            $where["userid"] =$this->checktoken($atoken);
+            if( $where["userid"]!=0){
+            if(!empty($phone)) {
+                $data["userpwd"] =$userpwd;
+                $where["phone"] =$phone;
+            }else{
+                $this->myApiPrint('phone dont empty',300);
+            }
+
+            $resn = $owner
+                ->where($where)
+                ->save($data);
+            if (!$resn) {
+                $this->myApiPrint('error',300);
+            }
+            else{
+                $this->myApiPrint('success',200,$resn);
+            }
+            }else{
+                $this->myApiPrint('error',300);
+            }
+        }
+
+        else{
+            $this->myApiPrint('accesstoken don\'t find',404);
+        }
+
+
+
+
+    }
+
+
+
+
+
+
+}

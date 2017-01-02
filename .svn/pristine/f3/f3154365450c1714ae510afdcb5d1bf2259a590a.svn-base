@@ -1,0 +1,16 @@
+[ 2016-08-15T16:00:34+08:00 ] ::1 /jiuducaijingwebapi/interface.php
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0110s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0080s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' E:\work\jiuducaijingwebapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' E:\work\jiuducaijingwebapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' E:\work\jiuducaijingwebapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' E:\work\jiuducaijingwebapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T16:00:57+08:00 ] ::1 /jiuducaijingwebapi/interface.php/API/Index/index
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0110s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0090s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' E:\work\jiuducaijingwebapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' E:\work\jiuducaijingwebapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' E:\work\jiuducaijingwebapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' E:\work\jiuducaijingwebapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+

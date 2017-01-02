@@ -1,0 +1,133 @@
+body {
+	font: 16px/1.5, '微软雅黑', sans-serif;
+	color: #000;
+	overflow-y: scroll;
+	background: #fff;
+	width: 100%;
+}
+img, fieldset {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+a, input, textarea {
+	font: 16px/1.5, '微软雅黑', sans-serif;
+}
+input, textarea {
+	text-indent: 3px;
+	background: #f1f1f1;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a {
+	color: #808080;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+h1, h2, h3, h4, h5 {
+	font-family: '微软雅黑', arial, sans-serif;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+ul, li, p, ol {
+	margin: 0;
+	padding: 0;
+}
+ul {
+	list-style: none;
+}
+.wrapper {
+	width: 100%;
+	margin: 0 auto;
+	text-align: left;
+}
+html {
+	margin: 0;
+	padding: 0;
+}
+* {
+	font-family: '微软雅黑';
+	font-size: 13px;
+	margin: 0;
+	padding: 0;
+}
+.mt4 {
+	margin-top: 4em !important;
+}
+.mt7 {
+	margin-top: 7em !important;
+}
+.mt8 {
+	margin-top: 8.8em !important;
+}
+.mt04 {
+	margin-top: 0.4em !important;
+}
+.ofh {
+	overflow: hidden;
+}
+
+.detailtop {
+	width: 94%;
+	margin: 0 auto;
+}
+/*详细页*/
+.detail-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	border-bottom: 1px solid #f0f0f0;
+	height: 3em;
+	overflow: hidden;
+	z-index: 999;
+	line-height: 3em;
+	text-align: center;
+	font-size: 18px;
+	background-color: #ff6509;
+	color: #fff;
+}
+.detailbox {
+	width: 94%;
+	background-color: #fff;
+	overflow: hidden;
+}
+.detailboxtitle {
+	margin-left: 4%;
+	margin-right: 10%;
+	font-size: 1.3em;
+	line-height: 2em;
+	text-align: justify;
+	color: #333;
+}
+.detailboxtime {
+	margin-left: 4%;
+	font-size: 1.1em;
+	color: #999999;
+	line-height: 2em;
+}
+.detailcon {
+	width: 100%;
+	margin-top:8px;
+	text-indent:2em;
+	color: #808080;
+	font-size: 1.2em;
+	line-height: 1.6em;
+	text-align: justify;
+	padding-bottom: 0.2em;
+}
+.detail-back {
+	background-image: url(images/back.png);
+	width: 12px;
+	height: 14px;
+	background-size: 100% 100%;
+	display: inline-block;
+	float: left;
+	margin: 1.5em -4% 0 4%;
+}
+.detailcon img{ width:100%; display:block; margin:10px 0;}

@@ -1,0 +1,166 @@
+[ 2016-08-03T11:14:20+08:00 ] ::1 /interface.php
+NOTIC: [2] mkdir(): File exists D:\WWW\ThinkPHP\Library\Think\Build.class.php 第 110 行.
+ERR: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+
+[ 2016-08-03T11:15:19+08:00 ] ::1 /interface.php
+SQL: SHOW COLUMNS FROM `dsy_pub_city` [ RunTime:0.0030s ]
+
+[ 2016-08-03T14:07:23+08:00 ] ::1 /interface.php
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tpadmin.pub_city' doesn't exist
+
+[ 2016-08-03T14:08:22+08:00 ] ::1 /interface.php
+ERR: Think\Controller:display方法不存在！
+
+[ 2016-08-03T14:17:58+08:00 ] ::1 /interface.php
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0030s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0000s ]
+
+[ 2016-08-03T14:26:25+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0030s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0000s ]
+
+[ 2016-08-03T17:30:40+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+
+[ 2016-08-03T17:32:26+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+
+[ 2016-08-03T17:32:27+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0000s ]
+
+[ 2016-08-03T17:32:28+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+
+[ 2016-08-03T17:32:28+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0000s ]
+
+[ 2016-08-03T17:32:45+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0000s ]
+
+[ 2016-08-03T17:40:05+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0030s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0000s ]
+
+[ 2016-08-03T17:48:26+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Undefined index: content D:\WWW\Interface\Api\Controller\IndexController.class.php 第 24 行.
+
+[ 2016-08-03T17:48:54+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Undefined index: content D:\WWW\Interface\Api\Controller\IndexController.class.php 第 24 行.
+
+[ 2016-08-03T17:49:41+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Array to string conversion D:\WWW\Interface\Api\Controller\IndexController.class.php 第 24 行.
+
+[ 2016-08-03T17:50:20+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Array to string conversion D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-03T17:51:02+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant id - assumed 'id' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-03T17:51:18+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-03T17:54:51+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-03T17:54:55+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-03T18:01:29+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-03T18:03:38+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 26 行.
+
+[ 2016-08-03T18:07:07+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 26 行.
+
+[ 2016-08-03T18:11:30+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `post` WHERE ( id = 14 )  [ RunTime:0.0010s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 26 行.
+
+[ 2016-08-03T18:18:10+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `post`  [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant i - assumed 'i' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant lenth - assumed 'lenth' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Array to string conversion D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-03T18:18:42+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `post`  [ RunTime:0.0010s ]
+NOTIC: [8] Use of undefined constant i - assumed 'i' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant lenth - assumed 'lenth' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Array to string conversion D:\WWW\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-03T18:23:13+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0050s ]
+SQL: SELECT * FROM `post`  [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+
+[ 2016-08-03T18:24:26+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `post`  [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+
+[ 2016-08-03T18:24:34+08:00 ] ::1 /interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `post` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `post`  [ RunTime:0.0010s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 27 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\Interface\Api\Controller\IndexController.class.php 第 28 行.
+

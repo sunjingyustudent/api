@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>帮助文章详细</title>
+</head>
+<body>
+<div>
+    <!--文章详细-->
+    {$lists["acontent"]}
+</div>
+</body>
+</html>

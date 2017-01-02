@@ -1,0 +1,30 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class IndexController extends Controller
+{
+    public function index(){
+        echo 'this is my application';
+        $this->display();
+    }
+
+    /*
+     *
+     * http://localhost:8080/jiuducaijingwebapi/index.php/Home/Index/articledetail/aautoid/9
+     * */
+    public function articledetail(){
+        $id = I('get.aautoid');
+        $as = M('article')
+            ->where(array('aautoid'=>$id))
+            ->field('createtime,aautoid,theme,artsouce,acontent,snapshots')
+            ->find();
+        $this->assign('lists', $as);// 赋值数据集
+        $this->display();
+    }
+
+
+
+
+}

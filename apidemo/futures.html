@@ -1,0 +1,53 @@
+
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="jquery-1.7.2.min.js"></script>
+    </head>
+    <body>
+      
+        <div><input type="button" id="submit" value="提交"/></div>
+        <div id="result">
+            
+        </div>
+        
+        <script type="text/javascript">
+                $("#submit").click(function(){
+           
+              
+                    $.ajax({
+                        type:"get",
+                        url:"http://test.api.9dushuju.com/Api/DataApi/futures",
+//                        data:{"phone":$("#phone").val().trim(),code:$("#code").val().trim()},
+                          data:{},
+                        dataType:"jsonp",
+                        success:function(res){
+                            
+                             var video =document.getElementById("result");
+                            video.innerHTML=res;
+//                        
+                          console.log(res.code);
+                         
+                           
+                        },
+                        error:function(){
+                           alert("发生错误");
+                         
+                        }
+                    });
+               
+                
+                
+                
+            });
+        </script>
+    </body>
+</html>

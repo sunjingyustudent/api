@@ -1,0 +1,92 @@
+[ 2016-08-15T14:54:43+08:00 ] ::1 /haoyuezhiboapi/Interface.php/
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0100s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0080s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T14:55:35+08:00 ] ::1 /haoyuezhiboapi/Interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0100s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0340s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T14:58:18+08:00 ] ::1 /haoyuezhiboapi/Interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0100s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0170s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T15:31:24+08:00 ] ::1 /haoyuezhiboapi/Interface.php?m=Api&c=Index&a=index
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0090s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0090s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T15:34:19+08:00 ] ::1 /haoyuezhiboapi/Interface.php
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0100s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0090s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T15:41:57+08:00 ] ::1 /haoyuezhiboapi/Interface.php
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0120s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0100s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T15:42:56+08:00 ] ::1 /haoyuezhiboapi/Interface.php
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0090s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0080s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T15:58:13+08:00 ] ::1 /haoyuezhiboapi/Interface.php
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0090s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0220s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T16:04:45+08:00 ] ::1 /haoyuezhiboapi/interface.php/
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0140s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0110s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T16:06:48+08:00 ] ::1 /haoyuezhiboapi/interface.php/API/Index/Index
+SQL: SHOW COLUMNS FROM `wht_news` [ RunTime:0.0170s ]
+SQL: SELECT * FROM `wht_news`  [ RunTime:0.0080s ]
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 24 行.
+NOTIC: [8] Use of undefined constant content - assumed 'content' D:\WWW\haoyuezhiboapi\Interface\Api\Controller\IndexController.class.php 第 25 行.
+
+[ 2016-08-15T18:32:20+08:00 ] ::1 /haoyuezhiboapi/Interface.php/API/Payment/getPayment
+SQL: SHOW COLUMNS FROM `wht_recharge` [ RunTime:0.0090s ]
+SQL: INSERT INTO `wht_recharge` (`userid`) VALUES ('1') [ RunTime:0.0230s ]
+
+[ 2016-08-15T18:32:37+08:00 ] ::1 /haoyuezhiboapi/Interface.php/API/Payment/getPayment
+SQL: SHOW COLUMNS FROM `wht_recharge` [ RunTime:0.0800s ]
+SQL: INSERT INTO `wht_recharge` (`userid`) VALUES ('1') [ RunTime:0.0700s ]
+
+[ 2016-08-15T18:32:39+08:00 ] ::1 /haoyuezhiboapi/Interface.php/API/Payment/getPayment
+SQL: SHOW COLUMNS FROM `wht_recharge` [ RunTime:0.0100s ]
+SQL: INSERT INTO `wht_recharge` (`userid`) VALUES ('1') [ RunTime:0.0100s ]
+

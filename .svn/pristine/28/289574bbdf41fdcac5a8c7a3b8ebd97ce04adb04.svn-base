@@ -1,0 +1,103 @@
+<?php
+/**
+ * 帐号公开接口API
+ * 1.banner图列表
+ * //2.根据banner图类型点击跳转页面
+ * 3.推荐的直播list接口
+ * 4.弹出活动层接口
+ */
+namespace Api\Controller;
+
+use Common\Controller\ApiController;
+
+
+class SlideshowController extends ApiController{
+    public function _initialize(){
+        //模块初始化，重写父类方法，避免该模块进入token验证
+        vendor('Pili');
+    }
+
+    /*
+     * banner图列表 redis读取数据
+     * 测试接口：
+     * */
+    public function slidelist()
+    {
+        $adslide=M('adslide');
+        \Predis\Autoloader::register();
+        $redis = new \Predis\Client();
+        if($redis -> exists ('adslidenav')){
+            $retval  =  $redis -> get ('adslidenav') ;
+            $this->myApiPrint('success','200', unserialize($retval));
+        }else{
+            $adslide=M('adslide');
+            \Predis\Autoloader::register();
+            $redis = new \Predis\Client();
+            $adscc= $adslide->field('adtype,navtype,imageurl,adurl,sort,roomid')->where('isdelete=0')->limit(5)->select();
+            $redis->set('adslidenav',serialize($adscc)); //存储多个key对应的value
+            $retval = $redis->get('adslidenav'); //获取多个key对应的value
+            if($redis -> exists ('adslidenav')){
+                $this->myApiPrint('success',200, unserialize($retval));
+            }else{
+                $this->myApiPrint('redis  error ','300');
+            }
+
+        }
+
+    }
+
+    /*
+     * 推荐的直播list接口
+     * 测试接口：
+     * */
+    public function recommentlist()
+    {
+        $atoken = I('get.accesstoken');
+        if ($this->checktoken($atoken)) {
+        try {
+            $credentials = new \Qiniu\Credentials(ACCESS_KEY, SECRET_KEY); #=> Credentials Object
+            $hub = new \Pili\Hub($credentials, HUB); # => Hub Object
+
+            $marker       = NULL;      // optional
+            $limit        = 100;      // optional
+            $title_prefix = NULL;      // optional
+            $status       = connected;      // optional, "connected" only
+            $result = $hub->listStreams($marker, $limit, $title_prefix, $status); # => Array
+            // var_export($result['items'][0]);
+            $array = array();
+            foreach($result['items'] as $key => $value){
+                // echo  $result['items'][$key]->toJSONString();
+                // $this->myApiPrint('success',200, $result['items'][$key]->toJSONString());
+                //  echo '<br/>';
+                // echo  $result['items'][$key]->toJSONString();
+                $data=  $result['items'][$key]->toJSONString();
+                $datas= json_decode($data,true);
+                $array[] = $datas;
+            }
+            $this->myApiPrint('success',200,$array);
+
+        } catch (Exception $e) {
+            $this->myApiPrint('listStreams() failed. Caught exception: '.$e->getMessage(),'300');
+            // echo "listStreams() failed. Caught exception: ",  $e->getMessage(), "\n";
+        }
+        } else {
+            $this->myApiPrint('accesstoken don\'t find', 404);
+        }
+
+    }
+
+
+    /*
+     * 弹出活动层接口
+     * 测试接口：
+     * */
+    public function showactivity()
+    {
+       /* vendor('Gateway');//导入类库
+        $Gateway=new \Gateway();
+        $Gateway->closeClient('7f00000108fc00000001');
+        $cid = $Gateway->getAllClientSessions();
+        var_dump($cid);*/
+    }
+
+}

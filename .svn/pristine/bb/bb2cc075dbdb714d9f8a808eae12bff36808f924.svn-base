@@ -1,0 +1,139 @@
+<?php
+/**
+ * 个人帐号公开接口API
+ *1.忘记密码
+ *2.修改密码
+ *3.修改头像
+ *4.增加经验接口（成长体系登录和充值情况下）
+ * 5.修改基本信息
+ * 6.根据用户usertoken显示基本信息
+ */
+namespace Api\Controller;
+
+use Common\Controller\ApiController;
+
+class UserController extends ApiController{
+    public function _initialize(){
+        //模块初始化，重写父类方法，避免该模块进入token验证
+
+    }
+
+
+
+    //2016-08-15 根据用户id获取用户的个人信息 sjy
+    public function showUserInfo(){
+        $userid = I('post.userid');
+        $isdelete = 0;
+        $owner = M('userinfos');
+        $resn = $owner->where("userid='%d' and isdelete='%i'",$userid,$isdelete)->select();
+        if (!$resn) {
+            $this->myApiPrint('don\'t find ',404);
+        }
+        else{
+            $msg = 'success';
+            $this->myApiPrint($msg,200,$resn);
+        }
+    }
+
+
+    //2016-08-15 根据用户id修改用户的个人信息 sjy
+    //m=Api&c=Account&a=register
+    public function updateuserInfo(){
+        $rm=I("get.");
+        $owner = M('userinfos');
+        $userid=$rm["userid"];//获取用户名
+         var_dump($userid);
+         var_dump($rm["username"]);
+        $isdelete=0;
+        $exit = $owner->where("userid='%d'and isdelete='%s' ",$userid,$isdelete)->find();
+
+        if($exit) {
+            $where["username"] = $rm["username"];//获取用户名
+            $where["email"] = $rm["email"];//获取用户email
+            $where["userpwd"] = $rm["userpwd"];//获取用户密码
+            $where["nickname"] = $rm["nickname"];//获取用户昵称
+            $where["fromsource"] = $rm["fromsource"];//获取用户来源
+            $where["sourcecode"] = $rm["sourcecode"];//获取用户来源编码
+            $where["headimage"] = $rm["headimage"];//获取用户头像
+            $where["phone"] = $rm["phone"];//获取用户手机号
+            $where["qq"] = $rm["qq"];//获取用户qq
+            $where["weixin"] = $rm["weixin"];//获取用户微信
+            $where["sina"] = $rm["sina"];
+        }else{
+            $this->myApiPrint('该用户不存在!',300);
+        }
+        var_dump($exit);
+        var_dump($where["sina"]);
+        $resn = $owner
+            ->where($userid)
+            ->save($where);
+
+        var_dump($resn);
+
+        if (!$resn) {
+            $this->myApiPrint('submit error',300);
+        }
+        else{
+            $msg = 'success';
+            $this->myApiPrint($msg,200,$resn);
+        }
+    }
+
+    /*
+     * 增加经验接口
+     * */
+     public function empiricalvalue()
+     {
+
+     }
+
+    //2016-08-16 根据用户token,旧密码，新密码修改密码 sjy
+    //m=Api&c=User&a=updatepwd
+    public function updatepwd(){
+
+        $atoken= I('post.atoken');
+        $olduserpwd = I('post.olduserpwd');
+        $newuserpwd = I('post.newuserpwd');
+        var_dump($atoken);
+        var_dump($olduserpwd);
+        var_dump($newuserpwd);
+        $owner = M('userinfos');
+
+        $exit = $owner
+            /*->where(atoken=$atoken, userpwd='%f' wht_userinfos.userid=wht_accesstoken.userid ",$atoken,$olduserpwd)*/
+            ->join("left join wht_accesstoken as u on u.userid = wht_userinfos.userid")
+            ->field('wht_userinfos.userpwd,wht_userinfos.userid')
+            ->where("atoken='%d'",$atoken)
+            ->select();
+        var_dump($exit[0]["userid"]);
+        var_dump($exit[0]["userpwd"]);
+        $userid=$exit[0]["userid"];
+        $pwd=$exit[0]["userpwd"];
+        if($pwd==$olduserpwd) {
+            $where["userpwd"] = $newuserpwd;
+        }else{
+            $this->myApiPrint('该用户不存在!',300);
+        }
+        var_dump($where["userpwd"]);
+
+        $resn = $owner
+
+            ->where("userid=$userid")
+            ->save($where);
+
+        var_dump($resn);
+
+        if (!$resn) {
+            $this->myApiPrint('submit error',300);
+        }
+        else{
+            $msg = 'success';
+            $this->myApiPrint($msg,200,$resn);
+        }
+
+
+
+    }
+
+
+}

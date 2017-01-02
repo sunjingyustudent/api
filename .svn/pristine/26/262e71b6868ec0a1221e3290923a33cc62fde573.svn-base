@@ -1,0 +1,195 @@
+<?php
+/**
+ * 帐号公开接口API
+ * 1.登录、
+ * 2.注册
+ * 3.忘记密码
+ * 不需要验证用户身份token
+ */
+namespace Api\Controller;
+
+use Common\Controller\ApiController;
+
+
+class LivecategoryController extends ApiController{
+    public function _initialize(){
+        //模块初始化，重写父类方法，避免该模块进入token验证
+        vendor("Pili");
+    }
+
+    /*
+     * 直播分类  redis读取数据
+     * 测试接口：http://localhost:8080/jiuducaijingwebapi/Api/Livecategory/categorylist
+     * */
+    public function categorylist()
+    {
+        $token=$_GET["accesstoken"];
+        $userid=$this->checktoken($token);
+        if($userid){
+            $credentials = new \Qiniu\Credentials(ACCESS_KEY, SECRET_KEY); #=> Credentials Object
+            $hub = new \Pili\Hub($credentials, HUB); # => Hub Object
+            $videoList=M("rooms")->where("status=1")->field("webcastkeyid")->select();
+            $array=array();
+            foreach($videoList as $item=>$value){
+                $streamid=$videoList[$item]["webcastkeyid"];
+                $array[]=$hub->getStream($streamid)->toJSONString();
+            }
+            return $this->myApiPrint("success","200",$array);
+        }else{
+            $this->myApiPrint("error","300");
+        }
+
+
+//        //保存到redis里
+//        $sitename=C('SITENAME');
+//        \Predis\Autoloader::register();
+//        $redis = new \Predis\Client();
+//        if($redis->exists($sitename.'category'))
+//        {
+//            $categorylist = $redis->get($sitename.'category');
+//            if($categorylist) {
+//                $this->myApiPrint("success",200,unserialize($categorylist));
+//            }
+//            else{
+//                $this->myApiPrint('redis error',300);
+//            }
+//        }
+//        else
+//        {
+//            //查询mysql数据库缓存到redis里
+//            $va = M('classify')
+//                ->where(array('isenable'=>'0','isdelete'=>'0'))
+//                ->order('sort asc')
+//                ->field('classifyid,classifyname,sort')
+//                ->select();
+//            if($va)
+//            {
+//                $redis->set($sitename.'category',serialize($va));//添加到redis缓存中
+//                $retval = $redis->get($sitename.'category');
+//                if($redis -> exists ($sitename.'category')){
+//                    $this->myApiPrint('success',200, unserialize($retval));
+//                }else{
+//                    $this->myApiPrint('redis  error ','300');
+//                }
+//            }
+//            else {
+//                $this->myApiPrint('redis error',300);
+//            }
+//        }
+    }
+
+    //通过传值判断当前是否开始直播
+    public function getVideosStatu(){
+        $token=$_GET["accesstoken"];
+        $userid=$this->checktoken($token);
+        if($userid){
+            $roomid=$_GET["roomid"];
+            $status=$_GET["status"];
+            if($status==1){
+                M("rooms")->setField("status",$status);
+            }else{
+                M("rooms")->setField("status",$status);
+            }
+            return $this->myApiPrint("success","200");
+        }else{
+            return $this->myApiPrint("error","300");
+        }
+    }
+
+
+    /*
+     * 根据直播分类获取所有分类下的直播列表
+     * 测试接口：
+     * */
+    public function webcastlistbycid()
+    {
+        $classifyid = I('get.classifyid');
+        $isdelete = 0;
+        $owner = M('userinfos u');
+        $resn = $owner
+            ->join("wht_rooms r on u.roomid=r.roomid")
+            ->field('r.webcastkeyid')
+            ->where("r.classifyid='%d' and r.isdelete='%i' ",$classifyid,$isdelete)
+            ->select();
+        if (!$resn) {
+            $this->myApiPrint('error',300);
+        }
+        else{
+            $credentials = new \Qiniu\Credentials(ACCESS_KEY, SECRET_KEY); #=> Credentials Object
+            $hub = new \Pili\Hub($credentials, HUB); # => Hub Object
+            $array=array();
+            foreach($resn as $item=>$value){
+                $streamJson=$hub->getStream($resn["webcastkeyid"])->toJSONString();
+                $array[]=$streamJson;
+            }
+
+
+            $msg = 'success';
+            $this->myApiPrint($msg,200,$array);
+        }
+
+    }
+
+    /*
+     * 所有的直播视频列表 redis读取数据【分页】
+     * 这个是第一次存取比如40条直播数据在redis里，之后的分页数据链接mysql读取
+     * 测试接口：
+     * */
+    public function allwebcast()
+    {
+        \Predis\Autoloader::register();
+        $redis = new \Predis\Client();
+
+        $credentials = new \Qiniu\Credentials(ACCESS_KEY, SECRET_KEY); #=> Credentials Object
+        $hub = new \Pili\Hub($credentials, HUB); # => Hub Object
+        //开始接收参数
+        $token=$_GET["accesstoken"];
+        $userid=$this->checktoken($token);
+        $pageSize=$_GET["pageSize"];
+        $pageIndex=$_GET["pageIndex"];
+        $count=$_GET["count"];
+        //结束接收参数
+
+        //开始分页
+        $Page       = new \Think\Page($count,$pageSize);
+        $res=$redis->hgetall("roomsKey");
+        $array=array();
+
+        //当前选择为第一页时，从数据库读取
+        if($pageIndex=="1"){
+            //判断是否有值
+            if(!empty($res)){
+                $room=$redis->hgetall("roomsKey");
+
+                var_dump($room);
+                foreach($room["webcastkeyid"] as $item=>$value){
+                    if($room["webcastkeyid"]!=null){
+                        $stream=$hub->getStream($room["webcastkeyid"]);
+
+                    }
+                    $array[]=$stream->toJSONString();
+                }
+
+            }else{//如果没有值的话从数据库中查询并添加到redis中，然后将查询到的结果插入
+                $result=M("rooms")->limit($count)->select();//查询数据库
+                $redis->hmset("roomsKey",$result);
+                $array=array();
+                foreach($result as $item=>$value){
+                    $stream=$hub->getStream($result["webcastkeyid"]);
+                    $array[]=$stream->toJSONString();
+                }
+                return $this->myApiPrint("success","200",$array);
+            }
+        }else{
+            $result=M("rooms")->limit($Page->firstRow,",",$Page->listRows)->select();//查询数据库
+            //$redis->hgetall("roomsKey",$result);
+            $array=array();
+            foreach($result as $item=>$value){
+                $stream=$hub->getStream($result["webcastkeyid"]);
+                $array[]=$stream->toJSONString();
+            }
+
+            return $this->myApiPrint("success","200",$array);
+        }
+    }
+}

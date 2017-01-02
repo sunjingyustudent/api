@@ -1,0 +1,246 @@
+<?php
+/**
+ * 个人帐号公开接口API
+ *1.忘记密码
+ *2.修改密码
+ *3.修改头像
+ *4.增加经验接口（成长体系登录和充值情况下）
+ * 5.修改基本信息
+ * 6.根据用户usertoken显示基本信息
+ */
+namespace Api\Controller;
+
+use Common\Controller\ApiController;
+
+class UserController extends ApiController{
+    public function _initialize(){
+        //模块初始化，重写父类方法，避免该模块进入token验证
+
+    }
+
+    /*
+     * 登录请求获取token 保存在REDIS里
+     * 包括游客和本站用户
+     * 测试接口：http://localhost:8080/jiuducaijingwebapi/Api/User/accesstoken/username/123/userpwd/134
+     * */
+    public function  accesstoken()
+    {
+        $user = I('get.username');
+        $pwd = I('get.userpwd');
+        if(!empty($user)&&!empty($pwd))
+        {
+            $where['userpwd'] = $pwd;
+            $where['username'] = $user;
+            $where['isdelete'] = 0;
+            $owner = M('userinfos');
+            $resn=$owner->where($where)
+                ->field("userid")
+                ->find();
+            if(!empty($resn)){
+                $userid = json_decode($resn["userid"]);
+//            var_dump($userid);
+                //调用声称toke的方法
+                $nick = '用户'.randCodeM(4);
+                $time=uniqid();
+                $token=md5($nick.$time.$userid);
+//            var_dump($token);
+                //保存到redis里
+                $sitename=C('SITENAME');
+                \Predis\Autoloader::register();
+                $redis = new \Predis\Client();
+                $redis ->set( $sitename.'-token-'.$token ,$userid);//添加到redis缓存中
+                $redis->expire($sitename.'-token-'.$token,86400); //设置过期时间 86400  1440分钟
+                $accesstoken = $sitename.'-token-'.$token;
+                if(!empty($accesstoken)){
+                    $this->myApiPrint('success',200,$accesstoken);
+                }else{
+                    $this->myApiPrint('don\'t find ',404);
+                }
+            }
+            else{
+                $this->myApiPrint('user does not exist',-0201);
+            }
+        }
+        else
+        {
+            //游客登录
+            $token=$this->nicktoken();
+            //保存到redis里
+            $sitename=C('SITENAME');
+            \Predis\Autoloader::register();
+            $redis = new \Predis\Client();
+            $redis ->set( $sitename.'-token-'.$token ,0);//添加到redis缓存中
+            $redis->expire($sitename.'-token-'.$token,28800); //设置过期时间 8个小时
+            $accesstoken = $sitename.'-token-'.$token;
+            if(!empty($accesstoken)){
+                $this->myApiPrint('success',200,$accesstoken);
+            }else{
+                $this->myApiPrint('don\'t find ',404);
+            }
+        }
+    }
+
+
+    /*//2016-08-15 根据用户token获取用户的个人信息 sjy
+    Api/User/showUserInfo/atoken/1
+    */
+    public function showUserInfo(){
+        $atoken = I('get.accesstoken');//获取用户的token
+
+        if($this->checktoken($atoken)) {
+            $where["userid"] = $this->checktoken($atoken);
+            if( $where["userid"]!=0){
+            $owner = M('userinfos');
+            $resn = $owner
+
+           -> where($where)
+                ->select();
+            if (!$resn) {
+                $this->myApiPrint('don\'t find ',404);
+            }
+            else{
+                $msg = 'success';
+                $this->myApiPrint($msg,200,$resn);
+            }
+        }else{
+            $this->myApiPrint('error',404);
+        }
+        }else{
+            $this->myApiPrint('error',404);
+        }
+    }
+
+
+    /*//2016-08-15 根据用户token修改用户的个人信息 sjy
+     Api/User/updateuserInfo/atoken/1/username/12/email/1/nickname/1/fromsource/1/sourcecode/1/headimage/1/phone/1/qq/1/weixin/1/sina/1
+     */
+    public function updateuserInfo(){
+        $rm=I("get.");
+        $owner = M('userinfos');
+        $atoken = I('get.accesstoken');//获取用户的token
+
+        if($this->checktoken($atoken)) {
+            $data["userid"] = $this->checktoken($atoken);
+            if(  $data["userid"]!=0){
+            $where["isdelete"]=0;
+
+
+                $where["username"] = $rm["username"];//获取用户名
+                $where["email"] = $rm["email"];//获取用户email
+                /* $where["userpwd"] = $rm["userpwd"];//获取用户密码*/
+                $where["nickname"] = $rm["nickname"];//获取用户昵称
+                $where["fromsource"] = $rm["fromsource"];//获取用户来源
+                $where["sourcecode"] = $rm["sourcecode"];//获取用户来源编码
+                $where["headimage"] = $rm["headimage"];//获取用户头像
+                $where["phone"] = $rm["phone"];//获取用户手机号
+                $where["qq"] = $rm["qq"];//获取用户qq
+                $where["weixin"] = $rm["weixin"];//获取用户微信
+                $where["sina"] = $rm["sina"];
+
+
+            $resn = $owner
+                ->where($data)
+                ->save($where);
+
+            /*     var_dump($resn);*/
+
+            if (!$resn) {
+                $this->myApiPrint('submit error', 300);
+            } else {
+                $msg = 'success';
+                $this->myApiPrint($msg, 200, $resn);
+            }
+        }else{
+            $this->myApiPrint(' error', 300);
+        }
+        }else{
+            $this->myApiPrint(' error', 300);
+        }
+    }
+
+    /*
+     * 增加经验接口
+     *
+     * */
+     public function addempiricalvalue()
+     {
+         $atoken = I('post.accesstoken');
+         //先修改用户值判断用户
+         if($this->accesstoken($atoken)){
+             $uid =$this->accesstoken($atoken);
+             if($uid>0) {
+                 //说明是本站用户不是游客
+                 $us = M('userinfos');
+                 $ev = M('empiricalvalue');
+                 //先修改用户经验值
+                 $userinfo['expervalue'] = I('post.expervalue');
+                 $info = $us->data($userinfo)->add();
+                 if ($info > 0) {
+                     //添加经验值记录
+                     $exp['userid'] = $uid;
+                     $exp['etype'] = I('post.etype');
+                     $exp['ecount'] = I('post.ecount');
+                     $info2 = $us->data($exp)->add();
+                     if($info2>0) {
+                         $this->myApiPrint('success',200);
+                     }
+                     else{
+                         $this->myApiPrint('submit error',300);
+                     }
+                 } else {
+                     $this->myApiPrint('submit error',300);
+                 }
+             }
+             else{
+                 $this->myApiPrint('error:Tourists cannot add experience',300);
+             }
+         }
+         else{
+             $this->myApiPrint('accesstoken don\'t find',404);
+         }
+     }
+
+    //2016-08-16 根据用户token,旧密码，新密码修改密码 sjy
+    //Api/User/updatepwd
+    public function updatepwd(){
+
+        $olduserpwd = I('get.olduserpwd');
+        $newuserpwd = I('get.newuserpwd');
+
+        $atoken = I('get.accesstoken');//获取用户的token
+
+        if($this->checktoken($atoken)) {
+            $where["userid"] = $this->checktoken($atoken);
+            if ($where["userid"] != 0) {
+                $owner = M('userinfos');
+                $exit = $owner
+                    ->field('userpwd')
+                    ->where($where)
+                    ->select();
+                $pwd = $exit[0]["userpwd"];
+                if ($pwd == $olduserpwd) {
+                    $data["userpwd"] = $newuserpwd;
+                } else {
+                    $this->myApiPrint('该用户不存在!', 300);
+                }
+                $resn = $owner
+                    ->where($where)
+                    ->save($data);
+                if (!$resn) {
+                    $this->myApiPrint('submit error', 300);
+                } else {
+                    $msg = 'success';
+                    $this->myApiPrint($msg, 200, $resn);
+                }
+
+
+            } else {
+                $this->myApiPrint(' error', 300);
+            }
+        } else {
+            $this->myApiPrint(' error', 300);
+        }
+    }
+
+
+}

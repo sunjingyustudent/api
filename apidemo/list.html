@@ -1,0 +1,111 @@
+
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="jquery-1.7.2.min.js"></script>
+    </head>
+    <body>
+        <div id="info">
+            <span>参数：</span><input type="text" value="accesstoken"/>- <span>值：</span><input type="text" value="111"/>
+        </div>
+        <script type="text/javascript">
+           var str=location.href;
+           var url=str.split("?");
+           var type=url[1];
+           item=url[2].split("&");
+           
+   
+           var count=item.length;
+//           alert(count);
+           var html="";
+           
+           for(var i=1;i<count;i++){
+               
+               html+=' <span>参数：</span><input type="text" readonly="true" value="'+item[i]+'"/>- <span>值：</span><input type="text" />';
+               
+           }
+              var video =document.getElementById("info");
+                            video.innerHTML=html;
+        </script>
+       
+        
+        <div><input type="button" id="submit" value="提交"/></div>
+        <div id="result">
+          
+        </div>
+        
+         
+        
+        <script type="text/javascript">
+                $("#submit").click(function(){
+                   var data="";
+                   
+                   var infocount=document.getElementById("info");
+                   var n=1;
+                   $("input[type='text']").each(function () {
+                    
+                    if(n%2==1){
+                        data+='"'+$(this).val()+'":';
+                    }else{
+                        data+='"'+$(this).val()+'",';
+                    }                
+                    n+=1;                   
+                    })
+                   
+                   
+                   
+                
+                  data=data.substring(0,data.length-1);
+                
+                   
+                  data="{"+data+"}";
+                  
+                    
+                 
+                 
+                 //  var data='"accesstoken":"wht1-token-14914aa622c43777e18813ee3d57ebde","roomid":"109"';  //关注成功的
+
+                   data=JSON.parse(data);
+                    $.ajax({
+                        type:type,
+                        url:item[0],
+//                          data:{"accesstoken":"wht1-token-14914aa622c43777e18813ee3d57ebde","roomid":"99"},//关注成功的
+    
+                            data:data,
+//                           data:data,
+                        dataType:"json",
+                        success:function(res){
+                             console.log(res);
+                            var  valuelist="";
+                            
+                             var video =document.getElementById("result");
+                             
+                               valuelist+='<span>{code:'+res.code+'</span>';
+                               valuelist+='<span>msg:'+res.msg+'</span>';
+                               
+                               console.log(res.result);
+                               valuelist+='<span>result:'+res.result+'}</span>';
+                            
+                            
+                          video.innerHTML=valuelist;
+                        
+                           
+                        },
+                        
+                    });
+               
+                
+                
+                
+            });
+        </script>
+    </body>
+</html>

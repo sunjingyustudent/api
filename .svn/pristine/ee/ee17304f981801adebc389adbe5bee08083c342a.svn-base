@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="/jiuducaijingwebapi/Public/js/jquery-1.7.1.min.js" type="application/javascript"></script>
+    <script>
+        $(function () {
+            $('#haha').click(function () {
+                //意见反馈
+                var stu3 = {
+                    userid: "1",
+                    content: "123456",
+                    qq: "123456123456123456",
+                    email:"123456@qq.com"
+                };
+                $.ajax({
+                    url: "Api/CompanyIntro/feedback",
+                    type: "post",
+                    data: JSON.stringify(stu3),
+                    contentType: "application/json",//指定请求类型为json格式
+                    dataType: "json",//指定输出类型为json格式
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+        })
+    </script>
+</head>
+<body>
+<input type="button" id="haha" value="提交" />
+
+</body>
+</html>

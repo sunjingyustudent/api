@@ -1,0 +1,154 @@
+<?php
+/**
+ * 公开接口API
+ * 基本的查询，登录，注册，等
+ * 不需要验证用户身份token
+ */
+namespace Api\Controller;
+
+use Common\Controller\ApiController;
+
+class IndexController extends ApiController{
+    public function _initialize(){
+        //模块初始化，重写父类方法，避免该模块进入token验证
+    }
+
+    public function index(){
+		//查询单个数据表的demo,
+        $va = M('news')->select();
+       // var_dump($va);
+	   if($va){
+        $count  =  count($va);
+        for($i=0;$i<$count;$i++) {
+			//反转义处理，去除html。
+            $cc= strip_tags(htmlspecialchars_decode($va[$i][content]));
+            $va[$i][content]=$cc;
+        }
+        $this->myApiPrint('success','200',$va);
+	   }else{
+		$this->myApiPrint('don\'t find ','404');      
+	   }
+    }
+
+    public function join(){
+        //连表查询数据表,
+        $Model=M('users');
+        // $vajoin=$Model->field('a.email,b.title,a.type')->table('users a,post b')->limit(5)->select();
+        //$vajoin=$Model->field('a.email,b.title,a.type')->table(array('users'=>'a','post'=>'b'))->limit(2)->select();
+        // $vajoin=$Model->alias('a')->join('post b ON b.user_id= a.id')->limit(10)->select();
+        //默认的JOIN类型,如果表中有至少一个匹配，则返回行
+        $vajoin= $Model->join('news ON users.id = news.id')->select();
+        if($vajoin){
+        $this->myApiPrint('success','200',$vajoin);}
+        else{
+            $this->myApiPrint('don\'t find ','404');
+        }
+
+    }
+    public function leftjoin(){
+        //连表查询数据表,
+        $Model=M('users');
+        //Left Join
+         $vajoin= $Model->join('LEFT JOIN news ON users.id = news.id')->select();
+        if($vajoin){
+            $this->myApiPrint('success','200',$vajoin);}
+        else{
+            $this->myApiPrint('don\'t find ','404');
+        }
+
+    }
+    public function rightjoin(){
+        //连表查询数据表,
+        $Model=M('users');
+        //Right Join
+        $vajoin= $Model->join('RIGHT JOIN news ON users.id = news.id')->select();
+        //合并查询
+        if($vajoin){
+            $this->myApiPrint('success','200',$vajoin);}
+        else{
+            $this->myApiPrint('don\'t find ','404');
+        }
+
+    }
+    public function select(){
+        //条件查询
+        $vajoin = M('news')->where('id = 2')->limit(10)->select();
+        //条件字段限制查询
+      //  $vajoin = M('news')->where('id = 2')->field('id,title')->limit(10)->select();
+
+        if($vajoin){
+            $this->myApiPrint('success','200',$vajoin);}
+        else{
+            $this->myApiPrint('don\'t find ','404');
+        }
+        // S('cache_pub_city',null); 设置缓存
+    }
+//简单对称加密算法之加密
+//    public function testEncode()
+//    {
+//        $str = I('get.str');
+//        echo myEncode($str);
+//    }
+//简单对称解密算法
+//    public function testDecode()
+//    {
+//        $str = I('get.str');
+//        echo myDecode($str);
+//    }
+    //用户登录。
+    public function Login()
+    {
+        $user = I('post.user');
+        $pwd = I('post.pwd');
+       // $from = I('post.from','android');
+        $password = md5($pwd);
+        $where['user_pass'] = '###'.$password;
+        $where['user_login'] = $user;
+        $owner = M('users');
+        $resn = $owner->where($where)->field('id,user_login,user_pass,last_login_time')->find();
+        if (!$resn) {
+            $this->myApiPrint('帐号密码错误',300);
+        }
+        else{
+            if (!$resn['last_login_time'])
+                $msg = 'first login';
+            else
+                $msg = 'success';
+            $ip = get_client_ip();
+          //  $Ip = new \Org\Net\IpLocation();
+            //$area = $Ip->getlocation($ip);
+            $ins_data ['last_login_time'] = date('Y-m-d H:i:s', time());
+            $ins_data ['last_login_ip'] = $ip;
+         //   $ins_data ['last_location'] = $area ['country'] . $area ['area'];
+            $owner->where('id=' . $resn ['id'])->data($ins_data)->save();
+
+          //  $strToken = $user.'|'.$resn['id'];
+
+          //  $resn['token'] = myDes_encode($strToken,$user); //用户数据 DES加密
+            $this->myApiPrint($msg,200,$resn);
+        }
+    }
+//用户注册
+    public function Register()
+    {
+        $user['user_login'] = I('post.user');
+        $va = $this->checkUserAccount($user['user_login']);
+        if ($va)
+            $this->myApiPrint('该帐号已被注册','-200');
+        else {
+            $member = M('user');
+            $user['user_pass'] = '###'.md5(I('post.pwd'));
+           // $user['stu_head_img'] =  C('HAND_IMG_PATH');
+            $user['creat_time'] = date('Y-m-d H:i:s');
+           // $user['from'] = I('post.from','android');
+            $info = $member->data($user)->add();
+            if ($info > 0) {
+                $this->myApiPrint('success',200,$info);
+            } else {
+                $this->myApiPrint('register error',300);
+            }
+        }
+    }
+
+
+}

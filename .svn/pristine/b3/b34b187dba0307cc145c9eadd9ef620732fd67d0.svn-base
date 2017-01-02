@@ -1,0 +1,59 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class IndexController extends Controller
+{
+    /*
+     * http://localhost:8080/jiuducaijingwebapi/index.php/Home/Index/index
+     * */
+    public function index(){
+        $total=10;//红包总额
+        $num=8;// 分成8个红包，支持8人随机领取
+        $min=0.01;//每个人最少能收到0.01元
+
+        $a = array();
+        for ($i=1;$i<$num;$i++)
+        {
+            $safe_total=($total-($num-$i)*$min)/($num-$i);//随机安全上限
+            $money=mt_rand($min*100,$safe_total*100)/100;
+            $total=$total-$money;
+            //$a=array('money'=>$money);
+            //$a[$i] =$money;
+            $a[$i] = array(
+                'i' => $i,
+                'money' => $money
+            );
+            echo $a[$i]['money'];
+            //array_push($a,$money);
+            echo '第'.$i.'个红包：'.$money.' 元，余额：'.$total.' 元 <br/>';
+        }
+        $a[$num] =$total;
+        echo $a[$i];
+        echo '第'.$num.'个红包：'.$total.' 元，余额：0 元<br/><br/>';
+        echo $a;
+        $pos = array_search(max($a),$a);
+        echo '最佳手气是：'.$a[$pos].'元';
+        //echo 'this is my applicati    on';
+        $this->display();
+    }
+
+    /*
+     *
+     * http://localhost:8080/jiuducaijingwebapi/index.php/Home/Index/articledetail/aautoid/9
+     * */
+    public function articledetail(){
+        $id = I('get.aautoid');
+        $as = M('article')
+            ->where(array('aautoid'=>$id))
+            ->field('createtime,aautoid,theme,artsouce,acontent,snapshots')
+            ->find();
+        $this->assign('lists', $as);// 赋值数据集
+        $this->display();
+    }
+
+
+
+
+}

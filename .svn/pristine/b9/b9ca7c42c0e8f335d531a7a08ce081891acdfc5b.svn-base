@@ -1,0 +1,83 @@
+<?php
+/**
+ * 直播详细公开接口API
+ * 基本的查询，登录，注册，等
+ * 不需要验证用户身份token
+ */
+namespace Api\Controller;
+
+use Common\Controller\ApiController;
+
+class liveDetailController extends ApiController{
+    public function _initialize(){
+        //模块初始化，重写父类方法，避免该模块进入token验证
+        vendor("Pili");
+    }
+
+    //根据房间id获取流并返还
+    public function getvideos(){
+        $token=I("get.accesstoken");
+        $userid=$this->checktoken($token);
+        if($userid!=false){
+            $credentials = new \Qiniu\Credentials(ACCESS_KEY, SECRET_KEY); #=> Credentials Object
+            $hub = new \Pili\Hub($credentials, HUB); # => Hub Object
+
+            $roomid=$_GET["roomid"];
+            if($roomid!=null){
+                var_dump("1");
+                var_dump($roomid);
+                $streamid=M("rooms")->where("roomid=$roomid")->field("webcastkeyid")->find();
+                $stream=$hub->getStream($roomid);
+                return $this->myApiPrint("success","200",$stream->toJSONString());
+            }else{
+                return $this->myApiPrint("error","300");
+            }
+            var_dump("2");
+
+        }else{
+            return $this->myApiPrint("error","300");
+        }
+    }
+
+
+    //根据房间id获取房间信息
+    public function getroom(){
+        $token=I("get.accesstoken");
+        $userid=$this->checktoken($token);
+        if($userid!=false){
+            $roomid=$_GET["roomid"];
+            $model=M("rooms")->where("roomid=$roomid")->find();
+            if($model){
+                return $this->myApiPrint("success","200",$model);
+            }else{
+                return $this->myApiPrint("error","300");
+            }
+        }else{
+            return $this->myApiPrint("error",".200");
+        }
+    }
+
+
+    //获取个人主播的个人信息
+    public function getperson(){
+        $token=I("get.accesstoken");
+        $userid=$this->checktoken($token);
+        if($userid!=false){
+            $userid=$_GET["userid"];
+            $token=I("get.atoken");
+            $userid=$this->checktoken($token);
+            if($userid!=false){
+                $model=M("userinfos")->where("userid=$userid")->find();
+                if ($model){
+                    return $this->myApiPrint("success","200",$model);
+                }else{
+                    return $this->myApiPrint("error","300");
+                }
+
+            }
+        }else{
+            return $this->myApiPrint("error","300");
+        }
+
+    }
+}

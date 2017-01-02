@@ -1,0 +1,23 @@
+<?php
+return array(
+
+     //数据库设置
+    'DB_TYPE'   => 'mysql', // 数据库类型
+    'DB_HOST'   => 'rdsm614a6mt50f295feoo.mysql.rds.aliyuncs.com', // 服务器地址
+    'DB_NAME'   => 'haoyuezhibo', // 数据库名
+    'DB_USER'   => 'haoyuezhibo', // 用户名
+    'DB_PWD'    => 'AbCd1234', // 密码
+    'DB_PORT'   => '3306', // 端口
+    'DB_PREFIX' => 'wht_', // 数据库表前缀
+
+    /* SESSION设置 */
+    'SESSION_AUTO_START' => true, // 是否自动开启Session
+    'SESSION_OPTIONS'    => array(), // session 配置数组 支持type name id path expire domain 等参数
+    'SESSION_TYPE'       => '', // session hander类型 默认无需设置 除非扩展了session hander驱动
+    'SESSION_PREFIX'     => '', // session 前缀
+
+    'DEFAULT_MODULE'     => 'Home', // 默认模块
+    'DEFAULT_CONTROLLER' =>  'Index', // 默认控制器名称
+    'DEFAULT_ACTION'      =>  'index', // 默认操作名称
+
+);

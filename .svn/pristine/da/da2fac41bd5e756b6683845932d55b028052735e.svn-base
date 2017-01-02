@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>post测试demo</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<body>
+<div>
+    <h1>post测试demo</h1>
+</div>
+<script src="http://libs.baidu.com/jquery/1.4.1/jquery.js"></script>
+    <div class="fitem1">
+      <label> test1:</label>
+      <input name="userid" style="padding: 2px; width: 135px; border: 1px solid #A4BED4;" />
+    </div>
+    <div class="fitem2">
+      <label> test2:</label>
+      <input name="idcardimg" class="easyui-combobox" style="padding: 2px; width: 141px; " />
+    </div>
+    <div class="fitem3">
+      <label> test3:</label>
+      <input name="idcardinvimg" class="easyui-combobox" style="padding: 2px; width: 141px; " />
+    </div>
+	<div class="fitem4">
+      <label> test4:</label>
+      <input name="idcardperimg" class="easyui-combobox" style="padding: 2px; width: 141px; "/>
+    </div>
+	<button id="tijiao">提交</button>
+
+<script>
+$("#tijiao").click(function(){
+  $.post("http://localhost/haoyuezhiboapi/Api/Anchor/accredid/",{"userid":$(".fitem1 input").val(),"idcardimg":$(".fitem2 input").val(),"userid":$(".fitem3 input").val(),"idcardimg":$(".fitem4 input").val()},function(result){
+console.log(result);
+ 
+  },'json');
+
+});
+
+</script>

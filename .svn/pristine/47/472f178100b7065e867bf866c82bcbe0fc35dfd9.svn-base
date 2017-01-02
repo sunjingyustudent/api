@@ -1,0 +1,79 @@
+<?php
+/**
+ * 红包公开接口API
+ * 1.收到的红包
+ * 2.发出的红包
+ * 3.红包被抢详细
+ * 不需要验证用户身份token
+ */
+namespace Api\Controller;
+
+use Common\Controller\ApiController;
+
+class RedpacketsController extends ApiController{
+    public function _initialize(){
+        //模块初始化，重写父类方法，避免该模块进入token验证
+    }
+
+    //2016-08-15 根据用户id获取用户所有收到的红包 sjy
+    public function ReceiveRedPackets(){
+        $userid = I('post.userid');
+
+        $isdelete = 0;
+        $owner = M('recpacketrecord');
+
+        $resn = $owner->where("touserid='%d' and isdelete='%i'",$userid,$isdelete)->select();
+        if (!$resn) {
+            $this->myApiPrint('错误!',300);
+        }
+        else{
+            $msg = 'success';
+            $this->myApiPrint($msg,200,$resn);
+        }
+    }
+
+
+    //2016-08-15 根据用户id获取用户所有收到的红包 sjy
+    public function SendRedPackets(){
+        $userid = I('post.userid');
+        $isdelete = 0;
+        $owner = M('redpackets');
+
+        $resn = $owner->where("userid='%d' and isdelete='%i'",$userid,$isdelete)->select();
+        if (!$resn) {
+            $this->myApiPrint('错误!',300);
+        }
+        else{
+            $msg = 'success';
+            $this->myApiPrint($msg,200,$resn);
+        }
+    }
+
+    //2016-08-15 根据用户id和红包id获取指定红包id的红包详情 sjy
+    public function RedPacketsDetail(){
+        $userid = I('post.userid');
+        $redpacketid = I('post.redpacketid');
+        $isdelete = 0;
+       /* $where["wht_redpackets.redpacketid"]=$redpacketid;
+        $where["userid"]=$userid;
+        $where["wht_redpackets.isdelete"]=0;*/
+        $owner = M('redpackets');
+        $resn = $owner
+            ->join("left join wht_recpacketrecord as u on u.redpacketid = wht_redpackets.redpacketid")
+            ->field('u.*')
+           ->where("userid='%d' and wht_redpackets.isdelete='%i'and wht_redpackets.redpacketid='%e'",$userid,$isdelete,$redpacketid)
+           /* ->where($where)*/
+            ->select();
+        if (!$resn) {
+            $this->myApiPrint('错误!',300);
+        }
+        else{
+            $msg = 'success';
+            $this->myApiPrint($msg,200,$resn);
+        }
+    }
+
+
+
+
+}

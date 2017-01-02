@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="__ROOT__/Public/css/index.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>支付页面</title>
+    <script src="__PUBLIC__/js/jquery-1.7.1.min.js"></script>
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    <div class="u_mainbody">
+        <div class="consume_nr">
+            <div class="shark_tit earnings_top clearfix">
+                <p class="consume_tit"><i class="consume_tit_icon"></i>充值</p>
+            </div>
+            <input type="hidden" value="{$ordernum}" name="ordernum" id="ordernum" />
+            <!--<form action="{:U('AliPay/sendAliPayMessage')}">-->
+            <form>
+                <ul class="price-list clearfix" id="payMoney">
+                    <li class="on"><em></em><!--<input type="radio" name="diamonds" value="10" checked="checked" />--><p class="diamond">36钻石</p><p class="money">0.01元</p><input type="hidden" value="6" /></li>
+                    <li><em></em><!--<input type="radio" name="diamonds" value="30" />--><p class="diamond">180钻石</p><p class="money">30元</p><input type="hidden" value="30" /></li>
+                    <li><em></em><!--<input type="radio" name="diamonds" value="98" />--><p class="diamond">588钻石</p><p class="money">98元</p><input type="hidden" value="98" /></li>
+
+                </ul>
+                <div class="pay-total">
+                    实付金额： <strong><span class="price" id="money">0.01</span>元</strong><span  class="stars">(<span id="diam">36钻石</span>)</span>
+                </div>
+                <input class="btn-pay" type="button"  value="确认充值" />
+            </form>
+            <p class="page"></p>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+
+        $("input[type=button]").click(function(){
+
+            var money=$("#money").html();
+            var dismonds=$("#diam").html();
+            var id = {$userid};
+            $.ajax({
+                url:"{:U('AliPay/sendAliPayMessage')}",
+                type:"post",
+                async:true,
+                global:false,
+                data:{"Userid":id,"WIDsubject":"九度直播钻石充值","WIDtotal_fee":money},
+                success:function(data){
+//                    alert({$userid});
+//                    return;
+                    $("body").html(data);
+                },
+                error:function(){
+                    alert("当前系统异常，请稍后再试！")
+                }
+            });
+        });
+
+        $("#payMoney").children("li").click(function(){
+            $(this).siblings().removeClass("on").end().addClass("on");
+            $("#money").text($(this).find("input[type=hidden]").val());
+            $("#diam").html($(this).find("p.diamond").html());
+        });
+    });
+</script>
+</body>
+</html>
